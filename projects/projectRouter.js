@@ -4,7 +4,7 @@ const Projects = require('../data/helpers/projectModel');
 const Actions = require('../data/helpers/actionModel');
 
 
- 
+// GET PROJECTS
 router.get('/', (req, res) => {
     Projects.get()
     .then(project =>{
@@ -19,6 +19,18 @@ router.get('/:id', validateProjectId, (req, res) => {
     Projects.get(req.params.id)
     .then(project =>{
         res.status(200).json(project);
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Could not get Projects'});
+    })
+})
+
+// GET ACTIONS //
+
+router.get('/:id/actions', validateProjectId, (req, res) => {
+    Projects.get(req.params.id)
+    .then(project =>{
+        res.status(200).json(project.actions);
     })
     .catch(err => {
         res.status(500).json({message: 'Could not get Projects'});
@@ -57,6 +69,8 @@ router.delete('/:id', validateProjectId, (req, res) => {
 })
 
 // ACTIONS CRUD //
+
+
 router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
     const newAction = req.body
     newAction.project_id = req.params.id;
