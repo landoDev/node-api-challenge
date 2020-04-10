@@ -5,14 +5,24 @@ const Projects = () => {
     const [projects, setProjects] = useState([]);
 
     useEffect(()=>{
-        axios.get('http://localhost:5000/api/projects')
+        axios.get('http://localhost:5000/api/projects/')
         .then(res=>{
-            console.log(res)
-            // setProjects(res.data)
+            setProjects(res.data)
         })
+        .catch(err => console.log(err))
     }, [])
     return(
-        <h2>Placeholder</h2>
+        <div>
+            {projects.map(project=>{
+                return(
+                    <div key={projects.id}>
+                        <h2>{project.name}</h2>
+                        <p>{project.description}</p>
+                    </div>
+                )
+                
+            })}
+        </div>
     )
 }
 
