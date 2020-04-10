@@ -16,12 +16,12 @@ The Minimum Viable Product must be completed in three hours.
 
 Follow these steps to set up and work on your project:
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your _Team Lead_ as collaborator on Github.
-- [ ] Clone your forked version of the Repository.
-- [ ] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
-- [ ] Implement the project on this Branch, committing changes regularly.
-- [ ] Push commits: git push origin `firstName-lastName`.
+- [x] Create a forked copy of this project.
+- [x] Add your _Team Lead_ as collaborator on Github.
+- [x] Clone your forked version of the Repository.
+- [x] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
+- [x] Implement the project on this Branch, committing changes regularly.
+- [x] Push commits: git push origin `firstName-lastName`.
 
 Follow these steps for completing your project.
 
@@ -38,15 +38,26 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your Team Lead.
 
-- [ ] Mention two parts of Express that you learned about this week.
+- [x] Mention two parts of Express that you learned about this week.
 
-- [ ] Describe Middleware?
+* Not 💯 on what this question is asking exactly. There are there different types of middleware (built-in, 3rd party and custom) and some common examples include cors, helmet and morgan
 
-- [ ] Describe a Resource?
+- [x] Describe Middleware?
 
-- [ ] What can the API return to help clients know if a request was successful?
+* Middleware is essentially written functions that extend software. Some are built in, some are third-party and some are custom made. They can be used to add extra features like security and validation.
 
-- [ ] How can we partition our application into sub-applications?
+- [x] Describe a Resource?
+
+* Everything is a resource lol anything(data) that needs to  be managed can be considered a resource
+
+- [x] What can the API return to help clients know if a request was successful?
+
+* API’s return status codes like 200(ok) or 201(created) (I believe 200-399 is a successful request) to assist clients in knowing if their call was successful.
+
+- [x] How can we partition our application into sub-applications?
+
+* We can partition our app into sub-applications using routers in express
+
 
 ## Minimum Viable Product
 
