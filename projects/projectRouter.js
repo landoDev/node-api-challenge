@@ -28,9 +28,27 @@ router.get('/:id', validateProjectId, (req, res) => {
 // GET ACTIONS //
 
 router.get('/:id/actions', validateProjectId, (req, res) => {
-    Projects.get(req.params.id)
+    // another solution to get by actions
+    // Projects.get(req.params.id)
+    // .then(project =>{
+    //     res.status(200).json(project.actions);
+    // })
+    // .catch(err => {
+    //     res.status(500).json({message: 'Could not get Projects'});
+    // })
+    Projects.getProjectActions(req.params.id)
     .then(project =>{
-        res.status(200).json(project.actions);
+        res.status(200).json(project);
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Could not get Projects'});
+    })
+})
+
+router.get('/:id/actions/:action_id', validateProjectId, validateActionId, (req, res) => {
+    Actions.get(req.params.action_id)
+    .then(action =>{
+        res.status(200).json(action);
     })
     .catch(err => {
         res.status(500).json({message: 'Could not get Projects'});
@@ -51,7 +69,7 @@ router.post('/', validateProject, (req, res) => {
 router.put('/:id', validateProjectId, validateProject, (req, res) => {
     Projects.update(req.params.id, req.body)
     .then(project => {
-        res.status(201).json(project);
+        res.status(200).json(project);
     })
     .catch(err => {
         res.status(500).json({message: 'Could not add Project'});
@@ -80,6 +98,29 @@ router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
     })
     .catch(err => {
         res.status(500).json({message: 'Could not add Action'});
+    })
+})
+
+router.put('/:id/actions/:action_id', validateProjectId, validateAction, (req, res) => {
+    const updateAction = req.body
+    const updateActionId = req.params.action_id;
+    Actions.update(updateActionId, updateAction)
+    .then(action => {
+        res.status(200).json(action);
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Could not add Project'});
+    })
+})
+
+router.delete('/:id/actions/:action_id', validateProjectId, validateActionId, (req, res) => {
+    const deleteAction = req.params.action_id;
+    Actions.remove(deleteAction)
+    .then(action => {
+        res.status(200).json(action);
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Could not delete Project'});
     })
 })
 
@@ -127,4 +168,20 @@ function validateAction (req, res, next){
         }
     }
       next();
+}
+
+function validateActionId (req, res, next){
+    console.log(req.params.action_id)
+    const  { action_id } = req.params
+    Actions.get(action_id)
+    .then(action =>{
+        if(action){
+            req.action = action
+            console.log(req.action)
+            next();
+        } else {
+            res.status(404).json({message: 'Action not found'});
+        }
+    })
+    
 }
