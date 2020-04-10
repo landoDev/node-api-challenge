@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Projects = require('../data/helpers/projectModel');
+const Actions = require('../data/helpers/actionModel');
 
 router.get('/', (req, res) => {
     Projects.get()
@@ -39,6 +40,16 @@ router.put('/:id', validateProjectId, validateProject, (req, res) => {
     })
     .catch(err => {
         res.status(500).json({message: 'Could not add Project'});
+    })
+})
+
+router.delete('/:id', validateProjectId, (req, res) => {
+    Projects.remove(req.params.id)
+    .then(project => {
+        res.status(200).json(project);
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Could not delete Project'});
     })
 })
 
