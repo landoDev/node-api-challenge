@@ -171,13 +171,11 @@ function validateAction (req, res, next){
 }
 
 function validateActionId (req, res, next){
-    console.log(req.params.action_id)
     const  { action_id } = req.params
     Actions.get(action_id)
     .then(action =>{
         if(action){
             req.action = action
-            console.log(req.action)
             next();
         } else {
             res.status(404).json({message: 'Action not found'});
