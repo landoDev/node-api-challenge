@@ -3,6 +3,8 @@ const router = express.Router();
 const Projects = require('../data/helpers/projectModel');
 const Actions = require('../data/helpers/actionModel');
 
+
+ 
 router.get('/', (req, res) => {
     Projects.get()
     .then(project =>{
@@ -23,6 +25,7 @@ router.get('/:id', validateProjectId, (req, res) => {
     })
 })
 
+// PROJECTS CRUD //
 router.post('/', validateProject, (req, res) => {
     Projects.insert(req.body)
     .then(project => {
@@ -53,6 +56,19 @@ router.delete('/:id', validateProjectId, (req, res) => {
     })
 })
 
+// ACTIONS CRUD //
+router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
+    const newAction = req.body
+    newAction.project_id = req.params.id;
+    Actions.insert(newAction)
+    .then(action => {
+        res.status(201).json(action);
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Could not add Action'});
+    })
+})
+
 module.exports = router;
 
 function validateProjectId (req, res, next){
@@ -78,6 +94,21 @@ function validateProject (req, res, next){
         } else {
             if (!req.body.description) {
             return res.status(400).json({ message: "missing required description field" })
+            }
+        }
+    }
+      next();
+}
+
+function validateAction (req, res, next){
+    if(Object.keys(req.body).length === 0) {
+        return res.status(400).json({ message: "missing Action data" })
+      } else {
+       if (!req.body.description) {
+        return res.status(400).json({ message: "missing required description field" })
+        } else {
+            if (!req.body.notes) {
+            return res.status(400).json({ message: "missing required notes field" })
             }
         }
     }
